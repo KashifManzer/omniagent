@@ -1,11 +1,10 @@
+'use client';
 
-"use client";
-
-import { DynamicWidget } from "@/lib/dynamic";
-import { useState, useEffect } from "react";
-import DynamicMethods from "@/app/components/Methods";
-import { useDarkMode } from "@/lib/useDarkMode";
-import Image from "next/image";
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import DynamicMethods from '@/app/components/Methods';
+import { DynamicWidget } from '@/lib/dynamic';
+import { useDarkMode } from '@/lib/useDarkMode';
 
 export default function Main() {
   const { isDarkMode } = useDarkMode();
@@ -27,35 +26,39 @@ export default function Main() {
   }
 
   return (
-    <div className={`min-h-screen flex flex-col items-center justify-center bg-gray-50 text-gray-800 transition-colors duration-300 ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-800'}`}>
+    <div
+      className={`min-h-screen flex flex-col items-center justify-center bg-gray-50 text-gray-800 transition-colors duration-300 ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-800'}`}
+    >
       <div className="absolute top-0 flex items-center justify-between w-full p-2.5">
         <Image
           className="pl-4 h-8"
-          src={isDarkMode ? "/logo-light.png" : "/logo-dark.png"}
+          src={isDarkMode ? '/logo-light.png' : '/logo-dark.png'}
           alt="dynamic"
           width={300}
           height={60}
         />
         <div className="flex gap-2.5 pr-4">
           <button
+            type="button"
             className={`px-5 py-2.5 rounded-xl border font-bold cursor-pointer transition-colors duration-300 ${isDarkMode ? 'bg-transparent border-white text-white hover:bg-white hover:text-gray-900' : 'bg-transparent border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white'}`}
             onClick={() =>
               window.open(
-                "https://docs.dynamic.xyz",
-                "_blank",
-                "noopener,noreferrer"
+                'https://docs.dynamic.xyz',
+                '_blank',
+                'noopener,noreferrer'
               )
             }
           >
             Docs
           </button>
           <button
+            type="button"
             className="px-5 py-2.5 rounded-xl border-none cursor-pointer transition-colors duration-300 font-bold bg-blue-500 text-white hover:bg-blue-600"
             onClick={() =>
               window.open(
-                "https://app.dynamic.xyz",
-                "_blank",
-                "noopener,noreferrer"
+                'https://app.dynamic.xyz',
+                '_blank',
+                'noopener,noreferrer'
               )
             }
           >
@@ -73,7 +76,7 @@ export default function Main() {
         </div>
         <Image
           className="h-60 w-auto ml-2"
-          src={isDarkMode ? "/image-dark.png" : "/image-light.png"}
+          src={isDarkMode ? '/image-dark.png' : '/image-light.png'}
           alt="dynamic"
           width={400}
           height={300}
