@@ -12,7 +12,8 @@
     "lint:biome": "biome lint .",
     "lint:biome:fix": "biome lint --write .",
     "check": "biome check .",
-    "check:fix": "biome check --write ."
+    "check:fix": "biome check --write .",
+    "check:all": "bun run lint:biome && bun run lint && bun run format:check && bunx tsc --noEmit && bun run build"
   },
   "dependencies": {
     "@dynamic-labs/ethereum": "^4",
