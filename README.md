@@ -17,7 +17,7 @@ A Next.js application with Biome linting and formatting, plus comprehensive CI/C
 ### Prerequisites
 
 - Node.js 18.18.0 or higher
-- Bun (recommended) or npm/yarn
+- Bun
 
 ### Installation
 
