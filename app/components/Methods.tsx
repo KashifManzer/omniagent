@@ -6,6 +6,9 @@ import {
   useUserWallets,
 } from '@dynamic-labs/sdk-react-core';
 import { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 interface DynamicMethodsProps {
   isDarkMode: boolean;
@@ -139,78 +142,62 @@ export default function DynamicMethods({ isDarkMode }: DynamicMethodsProps) {
   return (
     <>
       {isMounted && !isLoading && (
-        <div
-          className={`p-5 transition-colors duration-300 ease-in-out flex flex-col items-center ${isDarkMode ? 'bg-gray-800 text-gray-100' : 'bg-gray-100 text-gray-800'}`}
-        >
-          <div className="flex flex-wrap justify-center">
-            <button
-              type="button"
-              className="px-4 py-2.5 m-1.5 border-none rounded cursor-pointer font-bold transition-colors duration-300 ease-in-out bg-blue-500 text-white hover:opacity-80"
-              onClick={showUser}
-            >
-              Fetch User
-            </button>
-            <button
-              type="button"
-              className="px-4 py-2.5 m-1.5 border-none rounded cursor-pointer font-bold transition-colors duration-300 ease-in-out bg-blue-500 text-white hover:opacity-80"
-              onClick={showUserWallets}
-            >
-              Fetch User Wallets
-            </button>
+        <Card className="w-full max-w-4xl mx-auto">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              Dynamic Methods
+              <Badge variant="secondary">Connected</Badge>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex flex-wrap justify-center gap-2">
+              <Button onClick={showUser} variant="default">
+                Fetch User
+              </Button>
+              <Button onClick={showUserWallets} variant="secondary">
+                Fetch User Wallets
+              </Button>
 
-            {primaryWallet && isEthereumWallet(primaryWallet) && (
-              <>
-                <button
-                  type="button"
-                  className="px-4 py-2.5 m-1.5 border-none rounded cursor-pointer font-bold transition-colors duration-300 ease-in-out bg-blue-500 text-white hover:opacity-80"
-                  onClick={fetchEthereumPublicClient}
-                >
-                  Fetch PublicClient
-                </button>
-
-                <button
-                  type="button"
-                  className="px-4 py-2.5 m-1.5 border-none rounded cursor-pointer font-bold transition-colors duration-300 ease-in-out bg-blue-500 text-white hover:opacity-80"
-                  onClick={fetchEthereumWalletClient}
-                >
-                  Fetch WalletClient
-                </button>
-
-                <button
-                  type="button"
-                  className="px-4 py-2.5 m-1.5 border-none rounded cursor-pointer font-bold transition-colors duration-300 ease-in-out bg-blue-500 text-white hover:opacity-80"
-                  onClick={fetchEthereumMessage}
-                >
-                  Fetch Message
-                </button>
-              </>
-            )}
-          </div>
-          {(result || error) && (
-            <div className="justify-center w-full max-w-4xl p-4 rounded bg-black bg-opacity-10 break-words overflow-x-auto">
-              {error ? (
-                <pre className="whitespace-pre-wrap break-words max-w-full text-red-600">
-                  {error}
-                </pre>
-              ) : (
-                <pre className="whitespace-pre-wrap break-words max-w-full">
-                  {result}
-                </pre>
+              {primaryWallet && isEthereumWallet(primaryWallet) && (
+                <>
+                  <Button onClick={fetchEthereumPublicClient} variant="outline">
+                    Fetch PublicClient
+                  </Button>
+                  <Button onClick={fetchEthereumWalletClient} variant="outline">
+                    Fetch WalletClient
+                  </Button>
+                  <Button onClick={fetchEthereumMessage} variant="outline">
+                    Fetch Message
+                  </Button>
+                </>
               )}
             </div>
-          )}
-          {(result || error) && (
-            <div className="flex justify-center mt-2.5">
-              <button
-                type="button"
-                className="px-4 py-2.5 m-1.5 border-none rounded cursor-pointer font-bold transition-colors duration-300 ease-in-out bg-blue-500 text-white hover:opacity-80"
-                onClick={clearResult}
-              >
-                Clear
-              </button>
-            </div>
-          )}
-        </div>
+
+            {(result || error) && (
+              <Card className="bg-muted/50">
+                <CardContent className="p-4">
+                  {error ? (
+                    <pre className="whitespace-pre-wrap break-words max-w-full text-destructive text-sm">
+                      {error}
+                    </pre>
+                  ) : (
+                    <pre className="whitespace-pre-wrap break-words max-w-full text-sm">
+                      {result}
+                    </pre>
+                  )}
+                </CardContent>
+              </Card>
+            )}
+
+            {(result || error) && (
+              <div className="flex justify-center">
+                <Button onClick={clearResult} variant="destructive" size="sm">
+                  Clear
+                </Button>
+              </div>
+            )}
+          </CardContent>
+        </Card>
       )}
     </>
   );

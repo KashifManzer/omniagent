@@ -10,6 +10,7 @@ A Next.js application with Biome linting and formatting, plus comprehensive CI/C
 - **Dynamic Labs** integration for Web3 functionality
 - **Dark mode** support
 - **Tailwind CSS** for styling
+- **shadcn/ui** components for modern UI design
 
 ## Development Setup
 
@@ -49,6 +50,49 @@ bun run check:fix    # Fix all Biome issues
 # Type checking
 bunx tsc --noEmit    # TypeScript type checking
 ```
+
+## shadcn/ui Integration
+
+This project includes a complete shadcn/ui setup with modern, accessible components:
+
+### Components Available
+
+- **Button** - Multiple variants (default, secondary, outline, ghost, destructive, link) and sizes
+- **Card** - Complete card system with header, content, footer, title, and description
+- **Badge** - Status indicators with various styles
+- **Input** - Styled input fields with proper focus states
+- **Label** - Accessible label components
+- **Separator** - Horizontal and vertical separators
+
+### Usage Examples
+
+```tsx
+import { Button, Card, Badge } from '@/components/ui';
+
+// Button variants
+<Button variant="default">Default</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="outline">Outline</Button>
+
+// Card component
+<Card>
+  <CardHeader>
+    <CardTitle>Title</CardTitle>
+  </CardHeader>
+  <CardContent>Content</CardContent>
+</Card>
+
+// Badge component
+<Badge variant="default">Default</Badge>
+<Badge variant="secondary">Secondary</Badge>
+```
+
+### Theme Support
+
+- **Light/Dark Mode**: Automatic theme switching
+- **CSS Variables**: Consistent theming across components
+- **Accessibility**: Built with Radix UI primitives
+- **TypeScript**: Full type safety and IntelliSense
 
 ## Biome Configuration
 
@@ -102,14 +146,26 @@ omniagent/
 │   ├── globals.css        # Global styles
 │   ├── layout.tsx         # Root layout
 │   └── page.tsx           # Home page
+├── components/             # shadcn/ui components
+│   ├── ui/                # UI component library
+│   │   ├── button.tsx     # Button component
+│   │   ├── card.tsx       # Card component
+│   │   ├── badge.tsx      # Badge component
+│   │   ├── input.tsx      # Input component
+│   │   ├── label.tsx      # Label component
+│   │   ├── separator.tsx  # Separator component
+│   │   └── index.ts       # Component exports
+│   └── ShadcnDemo.tsx     # Component showcase
 ├── lib/                   # Utility libraries
 │   ├── dynamic.ts         # Dynamic Labs exports
 │   ├── providers.tsx      # React providers
 │   ├── useDarkMode.ts     # Dark mode hook
+│   ├── utils.ts           # shadcn/ui utilities
 │   └── wagmi.ts           # Wagmi configuration
 ├── public/                # Static assets
 ├── .github/workflows/     # GitHub Actions
 ├── biome.json             # Biome configuration
+├── components.json        # shadcn/ui configuration
 ├── package.json           # Dependencies and scripts
 └── README.md             # This file
 ```
