@@ -199,10 +199,20 @@ bun run lint
 
 ## Environment Variables
 
-Create a `.env.local` file with:
+Copy the example environment file and configure your variables:
+
+```bash
+cp env.example .env.local
+```
+
+Then edit `.env.local` with your actual values:
 
 ```env
+# Dynamic Labs Configuration
 NEXT_PUBLIC_DYNAMIC_ENV_ID=your_dynamic_environment_id
+
+# Next.js Configuration
+NODE_ENV=development
 ```
 
 ## License

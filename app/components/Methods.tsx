@@ -14,6 +14,7 @@ interface DynamicMethodsProps {
   isDarkMode: boolean;
 }
 
+// biome-ignore lint/correctness/noUnusedFunctionParameters: let it be for now
 export default function DynamicMethods({ isDarkMode }: DynamicMethodsProps) {
   const isLoggedIn = useIsLoggedIn();
   const { sdkHasLoaded, primaryWallet, user } = useDynamicContext();
