@@ -2,20 +2,29 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import DynamicMethods from '@/app/components/Methods';
 import { DynamicWidget } from '@/lib/dynamic';
 import { useDarkMode } from '@/lib/useDarkMode';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import ShadcnDemo from '@/components/ShadcnDemo';
+import { useIsLoggedIn } from '@dynamic-labs/sdk-react-core';
+import { useRouter } from 'next/navigation';
 
 export default function Main() {
   const { isDarkMode } = useDarkMode();
   const [isMounted, setIsMounted] = useState(false);
+  const isLoggedIn = useIsLoggedIn();
+  const router = useRouter();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  // Redirect to dashboard if already logged in
+  useEffect(() => {
+    if (isLoggedIn && isMounted) {
+      router.push('/dashboard');
+    }
+  }, [isLoggedIn, isMounted, router]);
 
   if (!isMounted) {
     return (
@@ -74,9 +83,12 @@ export default function Main() {
           </CardContent>
         </Card>
 
-        <DynamicMethods isDarkMode={isDarkMode} />
-
-        <ShadcnDemo />
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-4">Welcome to OmniAgent</h2>
+          <p className="text-muted-foreground mb-6">
+            Connect your wallet to access the DAO Dashboard
+          </p>
+        </div>
       </div>
 
       <div className="absolute bottom-0 right-5">
