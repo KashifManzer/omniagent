@@ -24,54 +24,62 @@ interface Proposal {
 export default function DAODashboard() {
   const { handleLogOut } = useDynamicContext();
   const router = useRouter();
-  
+
   const [proposals, setProposals] = useState<Proposal[]>([
     {
       id: '1',
       title: 'Add New Token to Treasury',
-      description: 'Proposal to add USDC token to the DAO treasury for better liquidity management.',
+      description:
+        'Proposal to add USDC token to the DAO treasury for better liquidity management.',
       status: 'active',
       votesFor: 1250,
       votesAgainst: 320,
       endDate: '2024-01-15',
-      creator: '0x1234...5678'
+      creator: '0x1234...5678',
     },
     {
       id: '2',
       title: 'Update Governance Parameters',
-      description: 'Adjust voting period and quorum requirements for better governance efficiency.',
+      description:
+        'Adjust voting period and quorum requirements for better governance efficiency.',
       status: 'pending',
       votesFor: 0,
       votesAgainst: 0,
       endDate: '2024-01-20',
-      creator: '0x8765...4321'
+      creator: '0x8765...4321',
     },
     {
       id: '3',
       title: 'Fund Development Team',
-      description: 'Allocate 100 ETH to development team for Q1 2024 initiatives.',
+      description:
+        'Allocate 100 ETH to development team for Q1 2024 initiatives.',
       status: 'passed',
       votesFor: 2100,
       votesAgainst: 150,
       endDate: '2024-01-10',
-      creator: '0xabcd...efgh'
-    }
+      creator: '0xabcd...efgh',
+    },
   ]);
 
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [newProposal, setNewProposal] = useState({
     title: '',
     description: '',
-    endDate: ''
+    endDate: '',
   });
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'active': return 'default';
-      case 'passed': return 'secondary';
-      case 'failed': return 'destructive';
-      case 'pending': return 'outline';
-      default: return 'default';
+      case 'active':
+        return 'default';
+      case 'passed':
+        return 'secondary';
+      case 'failed':
+        return 'destructive';
+      case 'pending':
+        return 'outline';
+      default:
+        return 'default';
     }
   };
 
@@ -85,7 +93,7 @@ export default function DAODashboard() {
         votesFor: 0,
         votesAgainst: 0,
         endDate: newProposal.endDate,
-        creator: '0xYour...Wallet'
+        creator: '0xYour...Wallet',
       };
       setProposals([proposal, ...proposals]);
       setNewProposal({ title: '', description: '', endDate: '' });
@@ -94,16 +102,22 @@ export default function DAODashboard() {
   };
 
   const handleVote = (proposalId: string, vote: 'for' | 'against') => {
-    setProposals(proposals.map(proposal => {
-      if (proposal.id === proposalId) {
-        return {
-          ...proposal,
-          votesFor: vote === 'for' ? proposal.votesFor + 1 : proposal.votesFor,
-          votesAgainst: vote === 'against' ? proposal.votesAgainst + 1 : proposal.votesAgainst
-        };
-      }
-      return proposal;
-    }));
+    setProposals(
+      proposals.map((proposal) => {
+        if (proposal.id === proposalId) {
+          return {
+            ...proposal,
+            votesFor:
+              vote === 'for' ? proposal.votesFor + 1 : proposal.votesFor,
+            votesAgainst:
+              vote === 'against'
+                ? proposal.votesAgainst + 1
+                : proposal.votesAgainst,
+          };
+        }
+        return proposal;
+      })
+    );
   };
 
   const handleLogout = async () => {
@@ -121,7 +135,9 @@ export default function DAODashboard() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold">DAO Dashboard</h1>
-          <p className="text-muted-foreground">Manage proposals and governance</p>
+          <p className="text-muted-foreground">
+            Manage proposals and governance
+          </p>
         </div>
         <div className="flex gap-2">
           <Button onClick={() => setShowCreateForm(!showCreateForm)}>
@@ -145,7 +161,9 @@ export default function DAODashboard() {
               <Input
                 id="title"
                 value={newProposal.title}
-                onChange={(e) => setNewProposal({...newProposal, title: e.target.value})}
+                onChange={(e) =>
+                  setNewProposal({ ...newProposal, title: e.target.value })
+                }
                 placeholder="Enter proposal title"
               />
             </div>
@@ -154,7 +172,12 @@ export default function DAODashboard() {
               <textarea
                 id="description"
                 value={newProposal.description}
-                onChange={(e) => setNewProposal({...newProposal, description: e.target.value})}
+                onChange={(e) =>
+                  setNewProposal({
+                    ...newProposal,
+                    description: e.target.value,
+                  })
+                }
                 placeholder="Describe your proposal"
                 className="w-full min-h-[100px] p-3 border rounded-md resize-none"
               />
@@ -165,7 +188,9 @@ export default function DAODashboard() {
                 id="endDate"
                 type="date"
                 value={newProposal.endDate}
-                onChange={(e) => setNewProposal({...newProposal, endDate: e.target.value})}
+                onChange={(e) =>
+                  setNewProposal({ ...newProposal, endDate: e.target.value })
+                }
               />
             </div>
             <Button onClick={handleCreateProposal} className="w-full">
@@ -198,24 +223,26 @@ export default function DAODashboard() {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground mb-4">{proposal.description}</p>
-              
+              <p className="text-muted-foreground mb-4">
+                {proposal.description}
+              </p>
+
               <div className="flex justify-between items-center">
                 <div className="flex gap-4 text-sm">
                   <span>👍 {proposal.votesFor} votes</span>
                   <span>👎 {proposal.votesAgainst} votes</span>
                 </div>
-                
+
                 {proposal.status === 'active' && (
                   <div className="flex gap-2">
-                    <Button 
-                      size="sm" 
+                    <Button
+                      size="sm"
                       onClick={() => handleVote(proposal.id, 'for')}
                     >
                       Vote For
                     </Button>
-                    <Button 
-                      size="sm" 
+                    <Button
+                      size="sm"
                       variant="outline"
                       onClick={() => handleVote(proposal.id, 'against')}
                     >
@@ -230,4 +257,4 @@ export default function DAODashboard() {
       </div>
     </div>
   );
-} 
+}
