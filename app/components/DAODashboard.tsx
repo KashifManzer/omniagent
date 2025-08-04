@@ -7,8 +7,6 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
-import { useRouter } from 'next/navigation';
 
 interface Proposal {
   id: string;
@@ -22,9 +20,6 @@ interface Proposal {
 }
 
 export default function DAODashboard() {
-  const { handleLogOut } = useDynamicContext();
-  const router = useRouter();
-
   const [proposals, setProposals] = useState<Proposal[]>([
     {
       id: '1',
@@ -103,34 +98,24 @@ export default function DAODashboard() {
 
   const handleVote = (proposalId: string, vote: 'for' | 'against') => {
     setProposals(
-      proposals.map((proposal) => {
-        if (proposal.id === proposalId) {
-          return {
-            ...proposal,
-            votesFor:
-              vote === 'for' ? proposal.votesFor + 1 : proposal.votesFor,
-            votesAgainst:
-              vote === 'against'
-                ? proposal.votesAgainst + 1
-                : proposal.votesAgainst,
-          };
-        }
-        return proposal;
-      })
+      proposals.map((proposal) =>
+        proposal.id === proposalId
+          ? {
+              ...proposal,
+              votesFor:
+                vote === 'for' ? proposal.votesFor + 1 : proposal.votesFor,
+              votesAgainst:
+                vote === 'against'
+                  ? proposal.votesAgainst + 1
+                  : proposal.votesAgainst,
+            }
+          : proposal
+      )
     );
   };
 
-  const handleLogout = async () => {
-    try {
-      await handleLogOut();
-      router.push('/');
-    } catch (error) {
-      console.error('Logout failed:', error);
-    }
-  };
-
   return (
-    <div className="w-full max-w-6xl mx-auto space-y-6">
+    <div className="w-full space-y-6">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
@@ -142,9 +127,6 @@ export default function DAODashboard() {
         <div className="flex gap-2">
           <Button onClick={() => setShowCreateForm(!showCreateForm)}>
             {showCreateForm ? 'Cancel' : 'Create Proposal'}
-          </Button>
-          <Button variant="outline" onClick={handleLogout}>
-            Sign Out
           </Button>
         </div>
       </div>
@@ -232,24 +214,23 @@ export default function DAODashboard() {
                   <span>👍 {proposal.votesFor} votes</span>
                   <span>👎 {proposal.votesAgainst} votes</span>
                 </div>
-
-                {proposal.status === 'active' && (
-                  <div className="flex gap-2">
-                    <Button
-                      size="sm"
-                      onClick={() => handleVote(proposal.id, 'for')}
-                    >
-                      Vote For
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => handleVote(proposal.id, 'against')}
-                    >
-                      Vote Against
-                    </Button>
-                  </div>
-                )}
+                <div className="flex gap-2">
+                  <Button
+                    size="sm"
+                    onClick={() => handleVote(proposal.id, 'for')}
+                    disabled={proposal.status !== 'active'}
+                  >
+                    Vote For
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => handleVote(proposal.id, 'against')}
+                    disabled={proposal.status !== 'active'}
+                  >
+                    Vote Against
+                  </Button>
+                </div>
               </div>
             </CardContent>
           </Card>

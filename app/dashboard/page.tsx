@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useIsLoggedIn } from '@dynamic-labs/sdk-react-core';
 import { useRouter } from 'next/navigation';
 import DAODashboard from '@/app/components/DAODashboard';
+import UserProfile from '@/app/components/UserProfile';
 import { Card, CardContent } from '@/components/ui/card';
 
 export default function DashboardPage() {
@@ -41,8 +42,23 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background p-6">
-      <DAODashboard />
+    <div className="min-h-screen bg-background">
+      {/* Header with User Profile */}
+      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="max-w-7xl mx-auto flex h-14 items-center justify-between px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-2">
+            <h1 className="text-lg font-semibold">OmniAgent DAO</h1>
+          </div>
+          <UserProfile />
+        </div>
+      </header>
+
+      {/* Main Dashboard Content */}
+      <div className="flex justify-center">
+        <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
+          <DAODashboard />
+        </div>
+      </div>
     </div>
   );
 }
