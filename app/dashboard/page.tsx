@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { useIsLoggedIn } from '@dynamic-labs/sdk-react-core';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import DAODashboard from '@/app/components/DAODashboard';
 import OmniAgentDashboard from '@/app/components/OmniAgentDashboard';
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 
 type DashboardTab = 'omniagent' | 'dao';
 

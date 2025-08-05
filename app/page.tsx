@@ -1,13 +1,13 @@
 'use client';
 
+import { useIsLoggedIn } from '@dynamic-labs/sdk-react-core';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { DynamicWidget } from '@/lib/dynamic';
-import { useDarkMode } from '@/lib/useDarkMode';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { useIsLoggedIn } from '@dynamic-labs/sdk-react-core';
-import { useRouter } from 'next/navigation';
+import { DynamicWidget } from '@/lib/dynamic';
+import { useDarkMode } from '@/lib/useDarkMode';
 
 export default function Main() {
   const { isDarkMode } = useDarkMode();

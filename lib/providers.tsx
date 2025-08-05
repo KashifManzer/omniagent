@@ -4,10 +4,10 @@ import { EthereumWalletConnectors } from '@dynamic-labs/ethereum';
 import { DynamicContextProvider } from '@dynamic-labs/sdk-react-core';
 import { DynamicWagmiConnector } from '@dynamic-labs/wagmi-connector';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import type React from 'react';
+import { createContext, type ReactNode, useContext, useState } from 'react';
 import { WagmiProvider } from 'wagmi';
 import { config } from '@/lib/wagmi';
-
-import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface Proposal {
   id: string;
@@ -40,7 +40,9 @@ interface ProposalContextType {
   updateProposal: (id: string, updates: Partial<Proposal>) => void;
 }
 
-const ProposalContext = createContext<ProposalContextType | undefined>(undefined);
+const ProposalContext = createContext<ProposalContextType | undefined>(
+  undefined
+);
 
 export function ProposalProvider({ children }: { children: ReactNode }) {
   const [approvedProposals, setApprovedProposals] = useState<Proposal[]>([]);
@@ -52,29 +54,33 @@ export function ProposalProvider({ children }: { children: ReactNode }) {
       status: 'pending',
       votesFor: 0,
       votesAgainst: 0,
-      endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 7 days from now
+      endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+        .toISOString()
+        .split('T')[0], // 7 days from now
       creator: 'AI Generated',
     };
-    setApprovedProposals(prev => [newProposal, ...prev]);
+    setApprovedProposals((prev) => [newProposal, ...prev]);
   };
 
   const removeProposal = (id: string) => {
-    setApprovedProposals(prev => prev.filter(p => p.id !== id));
+    setApprovedProposals((prev) => prev.filter((p) => p.id !== id));
   };
 
   const updateProposal = (id: string, updates: Partial<Proposal>) => {
-    setApprovedProposals(prev => 
-      prev.map(p => p.id === id ? { ...p, ...updates } : p)
+    setApprovedProposals((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, ...updates } : p))
     );
   };
 
   return (
-    <ProposalContext.Provider value={{
-      approvedProposals,
-      addApprovedProposal,
-      removeProposal,
-      updateProposal,
-    }}>
+    <ProposalContext.Provider
+      value={{
+        approvedProposals,
+        addApprovedProposal,
+        removeProposal,
+        updateProposal,
+      }}
+    >
       {children}
     </ProposalContext.Provider>
   );
@@ -102,9 +108,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       <WagmiProvider config={config}>
         <QueryClientProvider client={queryClient}>
           <DynamicWagmiConnector>
-            <ProposalProvider>
-              {children}
-            </ProposalProvider>
+            <ProposalProvider>{children}</ProposalProvider>
           </DynamicWagmiConnector>
         </QueryClientProvider>
       </WagmiProvider>

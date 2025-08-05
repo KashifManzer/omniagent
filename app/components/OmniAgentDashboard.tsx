@@ -1,13 +1,17 @@
 'use client';
 
 import { useState } from 'react';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import { TreasuryAsset, DAOTreasury, GovernanceProposal } from '@/lib/ai-agent';
+import type {
+  DAOTreasury,
+  GovernanceProposal,
+  TreasuryAsset,
+} from '@/lib/ai-agent';
 import { useProposals } from '@/lib/providers';
 
 interface TreasuryAnalysis {

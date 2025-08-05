@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { OmniAgent, DAOTreasury } from '@/lib/ai-agent';
+import { type NextRequest, NextResponse } from 'next/server';
+import { type DAOTreasury, OmniAgent } from '@/lib/ai-agent';
 
 export async function POST(request: NextRequest) {
   try {

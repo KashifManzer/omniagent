@@ -1,5 +1,5 @@
 import { createConfig, http } from 'wagmi';
-import { mainnet, localhost } from 'wagmi/chains';
+import { localhost, mainnet } from 'wagmi/chains';
 
 export const config = createConfig({
   // make sure to update the chains in the dashboard
