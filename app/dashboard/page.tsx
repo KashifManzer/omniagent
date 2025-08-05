@@ -4,12 +4,17 @@ import { useEffect, useState } from 'react';
 import { useIsLoggedIn } from '@dynamic-labs/sdk-react-core';
 import { useRouter } from 'next/navigation';
 import DAODashboard from '@/app/components/DAODashboard';
+import OmniAgentDashboard from '@/app/components/OmniAgentDashboard';
 import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+
+type DashboardTab = 'omniagent' | 'dao';
 
 export default function DashboardPage() {
   const isLoggedIn = useIsLoggedIn();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<DashboardTab>('omniagent');
 
   useEffect(() => {
     // Check if user is logged in
@@ -40,9 +45,37 @@ export default function DashboardPage() {
     return null; // Will redirect to home
   }
 
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'omniagent':
+        return <OmniAgentDashboard />;
+      case 'dao':
+        return <DAODashboard />;
+      default:
+        return <OmniAgentDashboard />;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background p-6">
-      <DAODashboard />
+      {/* Tab Navigation */}
+      <div className="flex gap-2 mb-6">
+        <Button
+          variant={activeTab === 'omniagent' ? 'default' : 'outline'}
+          onClick={() => setActiveTab('omniagent')}
+        >
+          OmniAgent
+        </Button>
+        <Button
+          variant={activeTab === 'dao' ? 'default' : 'outline'}
+          onClick={() => setActiveTab('dao')}
+        >
+          DAO Dashboard
+        </Button>
+      </div>
+
+      {/* Tab Content */}
+      {renderTabContent()}
     </div>
   );
 }
