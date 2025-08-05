@@ -18,6 +18,7 @@ import {
 import { parseEther, encodeFunctionData } from 'viem';
 import DAOActionExecutorABI from '@/lib/abi/DAOActionExecutor.json';
 import { useProposals } from '@/lib/providers';
+import { logToHedera } from '../../lib/utils';
 
 interface Proposal {
   id: string;
@@ -266,6 +267,18 @@ export default function DAODashboard() {
         chain: undefined,
         account: address,
       });
+
+      // Log execution to Hedera
+      const topicId = process.env.HEDERA_TOPIC_ID;
+      if (topicId) {
+        await logToHedera(
+          `Executed proposal: id=${proposal.id}, target=${proposal.target}, value=${proposal.value}, calldata=${proposal.calldata}, by=${address}`,
+          topicId
+        );
+        console.log('Logged execution to Hedera.');
+      } else {
+        console.warn('HEDERA_TOPIC_ID not set. Skipping Hedera logging.');
+      }
 
       // Update proposal status to executed
       const approvedProposal = approvedProposals.find(
