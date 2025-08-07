@@ -295,7 +295,7 @@ export default function OmniAgentDashboard() {
 
             {treasury.assets.map((asset, index) => (
               <div
-                key={`asset-${index}-${asset.token}-${asset.chain}`}
+                key={`asset-${index}-${asset.amount}-${asset.chain}`}
                 className="grid grid-cols-1 md:grid-cols-5 gap-2 items-end"
               >
                 <Input
