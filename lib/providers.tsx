@@ -26,7 +26,7 @@ interface Proposal {
   targetContract?: string;
   functionName?: string;
   payable?: boolean;
-  arguments?: any[];
+  arguments?: string[]; // Changed from any[] to string[]
   valueInETH?: number;
   support?: boolean;
   confidence?: number;
