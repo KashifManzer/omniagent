@@ -1,7 +1,7 @@
 'use client';
 
-import Image from 'next/image';
 import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
+import Image from 'next/image';
 import { getWalletProviderAvatar } from '@/lib/utils';
 
 interface WalletAvatarProps {

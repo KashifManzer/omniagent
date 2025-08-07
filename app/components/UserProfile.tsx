@@ -1,12 +1,28 @@
 'use client';
 
-import { useState } from 'react';
 import {
   useDynamicContext,
   useUserWallets,
 } from '@dynamic-labs/sdk-react-core';
+import {
+  Check,
+  ChevronDown,
+  Copy,
+  Eye,
+  EyeOff,
+  LogOut,
+  User,
+  Wallet,
+} from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,25 +31,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import {
-  ChevronDown,
-  User,
-  LogOut,
-  Wallet,
-  Eye,
-  EyeOff,
-  Copy,
-  Check,
-} from 'lucide-react';
+import SwitchAccountModal from './SwitchAccountModal';
 import UserDetails from './UserDetails';
 import WalletAvatar from './WalletAvatar';
-import SwitchAccountModal from './SwitchAccountModal';
 
 export default function UserProfile() {
   const { handleLogOut, user, primaryWallet } = useDynamicContext();

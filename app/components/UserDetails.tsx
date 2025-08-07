@@ -1,24 +1,24 @@
 'use client';
 
-import { useState } from 'react';
 import {
   useDynamicContext,
   useUserWallets,
 } from '@dynamic-labs/sdk-react-core';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Calendar,
+  Check,
+  Copy,
+  Eye,
+  EyeOff,
+  Mail,
+  User,
+  Wallet,
+} from 'lucide-react';
+import { useState } from 'react';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import {
-  User,
-  Mail,
-  Wallet,
-  Calendar,
-  Eye,
-  EyeOff,
-  Copy,
-  Check,
-} from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import WalletAvatar from './WalletAvatar';
 
 export default function UserDetails() {

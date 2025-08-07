@@ -1,22 +1,22 @@
 'use client';
 
-import { useState } from 'react';
 import {
   useDynamicContext,
   useUserWallets,
 } from '@dynamic-labs/sdk-react-core';
+import { LogOut, Plus, Wallet } from 'lucide-react';
+import { useState } from 'react';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { LogOut, Plus, Wallet } from 'lucide-react';
-import WalletAvatar from './WalletAvatar';
 import { DynamicWidget } from '@/lib/dynamic';
+import WalletAvatar from './WalletAvatar';
 
 interface SwitchAccountModalProps {
   open: boolean;
