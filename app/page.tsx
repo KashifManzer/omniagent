@@ -5,7 +5,7 @@ import {
   useIsLoggedIn,
   useUserWallets,
 } from '@dynamic-labs/sdk-react-core';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import AuthLoadingOverlay from '@/app/components/AuthLoadingOverlay';

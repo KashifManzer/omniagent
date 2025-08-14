@@ -1,5 +1,5 @@
 import { Scan, Wallet, Zap } from 'lucide-react';
-import { motion, useMotionValue, useTransform } from 'motion/react';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { DynamicWidget } from '@/lib/dynamic';

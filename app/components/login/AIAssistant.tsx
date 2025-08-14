@@ -1,5 +1,5 @@
 import { Bot, Zap } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 export function AIAssistant() {
@@ -21,7 +21,7 @@ export function AIAssistant() {
     }, 4000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, []); // messages is a constant array, no need for dependency
 
   return (
     <motion.div
