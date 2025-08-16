@@ -1,11 +1,8 @@
 import OpenAI from 'openai';
 
-// Initialize OpenAI client only if API key is available
-const openai = process.env.OPENAI_API_KEY
-  ? new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
-    })
-  : null;
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 export interface TreasuryAsset {
   token: string;
@@ -44,10 +41,6 @@ export class OmniAgent {
   }
 
   async analyzeTreasury(): Promise<string> {
-    if (!openai) {
-      return 'OpenAI API key not configured. Please set OPENAI_API_KEY environment variable.';
-    }
-
     const prompt = `
 You are an expert DAO treasury analyst. Analyze the following DAO treasury data and provide insights:
 
@@ -98,12 +91,6 @@ Respond in a clear, structured format.
   }
 
   async generateProposal(): Promise<GovernanceProposal> {
-    if (!openai) {
-      throw new Error(
-        'OpenAI API key not configured. Please set OPENAI_API_KEY environment variable.'
-      );
-    }
-
     const prompt = `
 You are an expert DAO governance strategist. Based on the following treasury data, generate a specific governance proposal:
 
@@ -203,14 +190,6 @@ Focus on practical, executable actions with real contract addresses and function
     issues: string[];
     suggestions: string[];
   }> {
-    if (!openai) {
-      return {
-        isValid: false,
-        issues: ['OpenAI API key not configured'],
-        suggestions: ['Please set OPENAI_API_KEY environment variable'],
-      };
-    }
-
     const prompt = `
 Validate this DAO governance proposal:
 
