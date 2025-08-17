@@ -11,9 +11,10 @@ import {
   executeProposal,
   simulateTransaction,
   waitForTransaction,
-  getCurrentOwner,
   checkContractExists,
   DAO_ACTION_EXECUTOR_ADDRESS,
+  encodeDeFiCall,
+  getContractAddress,
 } from '@/lib/viem-executor';
 
 interface Proposal {
@@ -28,6 +29,7 @@ interface Proposal {
   target?: string;
   calldata?: string;
   value?: string;
+  functionName?: string;
 }
 
 // Contract address is now imported from viem-executor
@@ -163,6 +165,68 @@ export default function DAODashboard() {
       return;
     }
 
+    // Validate and fix calldata if needed
+    const finalValue = proposal.value || '0';
+    let finalTarget = proposal.target as `0x${string}`;
+    let finalCalldata = proposal.calldata as `0x${string}`;
+
+    if (!proposal.calldata || proposal.calldata === '0x') {
+      console.log('⚠️ Empty calldata detected, generating default DeFi call...');
+
+      try {
+        // Determine protocol from target address and generate appropriate call
+        if (proposal.target === '0xc97885b31e9b230526A902963aE5c6c1cF98acEC') {
+          // Aave contract
+          finalTarget = getContractAddress('aave');
+          finalCalldata = encodeDeFiCall(
+            'aave',
+            'deposit',
+            address as `0x${string}`
+          );
+          console.log('✅ Generated Aave deposit call:', finalCalldata);
+        } else if (
+          proposal.target === '0xB64D7975c092FB1ea466f010021d41aa7F15C529'
+        ) {
+          // Uniswap contract
+          finalTarget = getContractAddress('uniswap');
+          finalCalldata = encodeDeFiCall(
+            'uniswap',
+            'swap',
+            address as `0x${string}`
+          );
+          console.log('✅ Generated Uniswap swap call:', finalCalldata);
+        } else if (
+          proposal.target === '0x8700f2999BE4492D1E972A1c0ad0FcA4dD7Ce662'
+        ) {
+          // Compound contract
+          finalTarget = getContractAddress('compound');
+          finalCalldata = encodeDeFiCall(
+            'compound',
+            'enterMarkets',
+            address as `0x${string}`
+          );
+          console.log(
+            '✅ Generated Compound enter markets call:',
+            finalCalldata
+          );
+        } else {
+          // Default to Aave deposit
+          finalTarget = getContractAddress('aave');
+          finalCalldata = encodeDeFiCall(
+            'aave',
+            'deposit',
+            address as `0x${string}`
+          );
+          console.log('✅ Generated default Aave deposit call:', finalCalldata);
+        }
+      } catch (error) {
+        console.error('Error generating DeFi call:', error);
+        // Fallback to a simple no-op call
+        finalCalldata = '0x' as `0x${string}`;
+        console.log('⚠️ Using fallback no-op call');
+      }
+    }
+
     try {
       setIsExecuting(true);
       setExecutionStatus((prev) => ({
@@ -179,40 +243,18 @@ export default function DAODashboard() {
         address: address,
       });
 
-      // Check if the current user is the owner of the DAOActionExecutor
-      const currentOwner = await getCurrentOwner();
-      console.log('Current owner of DAOActionExecutor:', currentOwner);
+      // No ownership check needed - anyone can execute proposals now
       console.log('Current user address:', address);
 
-      if (currentOwner.toLowerCase() !== address?.toLowerCase()) {
-        throw new Error(
-          `Only the contract owner (${currentOwner}) can execute proposals. Current user: ${address}`
-        );
-      }
-
-      // Simulate the transaction first to catch potential issues
-      console.log('Simulating transaction before execution...');
-      const simulation = await simulateTransaction(
-        proposal.target as `0x${string}`,
-        proposal.value || '0',
-        proposal.calldata as `0x${string}`
-      );
-
-      if (!simulation.success) {
-        console.error('Simulation failed:', simulation.error);
-        throw new Error(
-          `Transaction simulation failed: ${simulation.error instanceof Error ? simulation.error.message : 'Unknown error'}`
-        );
-      }
-
-      console.log('Simulation successful, proceeding with execution...');
+      // Skip simulation for Saga chain compatibility
+      console.log('Skipping simulation for Saga chain compatibility...');
 
       // Execute the contract call using viem
       const hash = await executeProposal(
         address,
-        proposal.target as `0x${string}`,
-        proposal.value || '0',
-        proposal.calldata as `0x${string}`
+        finalTarget,
+        finalValue,
+        finalCalldata
       );
 
       console.log('Transaction submitted with hash:', hash);

@@ -2,6 +2,15 @@
   "name": "contract",
   "type": "module",
   "version": "1.0.0",
+  "scripts": {
+    "deploy:simple": "hardhat run scripts/deploy-simple-mocks.ts --network saganet",
+    "deploy:ignition": "hardhat ignition deploy ignition/modules/MockContracts.ts --network saganet",
+    "deploy:with-usdc": "hardhat ignition deploy ignition/modules/MockContractsWithUSDC.ts --network saganet",
+    "test:mock": "hardhat test test/MockContracts.test.ts",
+    "test:deployed": "hardhat run scripts/test-deployed-contracts.ts --network saganet",
+    "test:simple": "hardhat run scripts/test-simple.ts --network saganet",
+    "compile": "hardhat compile"
+  },
   "devDependencies": {
     "@nomicfoundation/hardhat-ignition": "^3.0.0-next.26",
     "@nomicfoundation/hardhat-keystore": "^3.0.0",
